@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Excel uploading!</title>
+  </head>
+  <body>
+    <form method="post" onsubmit=False enctype="multipart/form-data">
+      <div class="jumbotron">
+        <h1 class="display-4">Uplaod your excel file here.</h1>
+        <hr class="my-4">
+        <div class="form-group">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {{ form.non_field_errors }}
+      <button type="submit" name='uploadFromPC' class="btn btn-primary">Upload</button>
+      {{ message }}
+      </div>
+    </form>
+    {% if files %}
+    <table border="1px solid black" padding="10px">
+      <tr>
+        <th>Adress </th>
+        <th> Longitude </th>
+        <th> Lattitude </th>
+      </tr>
+      {% for value in  files %}
+      <tr>
+        <td>{{ value.0 }} </td>
+        <td>{{ value.2 }}</td>
+        <td>{{ value.1 }}</td>
+      </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'download' %}">download</a>
+    {% endif %}
+    </div>
+
+  </body>
+</html>
